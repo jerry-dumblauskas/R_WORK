@@ -1,0 +1,21 @@
+brew install Caskroom/cask/rstudio
+==> Tapping caskroom/cask
+Cloning into '/usr/local/Library/Taps/caskroom/homebrew-cask'...
+remote: Counting objects: 3438, done.
+remote: Compressing objects: 100% (3393/3393), done.
+remote: Total 3438 (delta 65), reused 239 (delta 23), pack-reused 0
+Receiving objects: 100% (3438/3438), 5.87 MiB | 523.00 KiB/s, done.
+Resolving deltas: 100% (65/65), done.
+Checking connectivity... done.
+Tapped 1 formula (3,405 files, 13.3M)
+==> brew cask install Caskroom/cask/rstudio
+==> We need to make Caskroom for the first time at /opt/homebrew-cask/Caskroom
+==> We'll set permissions properly so we won't need sudo in the future
+Password:
+==> Downloading https://download1.rstudio.org/RStudio-0.99.491.dmg
+######################################################################## 100.0%
+==> Verifying checksum for Cask rstudio
+==> Symlinking App 'RStudio.app' to '/Users/xxx/Applications/RStudio.app'
+🍺  rstudio staged at '/opt/homebrew-cask/Caskroom/rstudio/0.99.491' (1329 files, 304M)
+
+

@@ -1,0 +1,11 @@
+For the Data Science Specializations I've decided to use
+R installed via brew
+
+ran these 2 commands
+
+brew install homebrew/science/r
+brew install Caskroom/cask/rstudio
+
+output is at:
+brew_install_r
+brew_install_rstudio
