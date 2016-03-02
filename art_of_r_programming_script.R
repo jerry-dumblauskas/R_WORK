@@ -2,6 +2,7 @@
 x<-rnorm(10)
 
 ## Vectors
+  # all items in a vector must me the same mode (type)
 vect<- c(1,2,3,4)
 vect1<-c(5,6)
 xvect<-vect + (vect1*2)
@@ -40,14 +41,39 @@ print(c(1,2,4) + c(6,0,9,20,22))
   #they also have modes, such as numeric and character. 
   #(On the other hand, vectors are not one-column or one-row matrices.)
   
-  #storage of a matrix is in column-major order
+  #storage of a matrix is in column-major order (can override with byrow)
   m<-matrix(c(1,2,3,4), ncol=2)
   print (m)
   
+  # apply functions are for matrices!!!!
+  # apply(matrix,dimcode - 1 row, 2 col,function,fargs)
+  z<-apply(m,1,sum)
+  z1<-apply(m,2,sum)
+  print(z)
+  print(z1)
+  
+  # cbind adds cols, rbind rows, uses recyclinng, so if short must be a multiple
+  # can also name matrices
+  # arrays are mXn so a general case of matrices
 
 ## Lists
-Lst <- list(name="Fred", wife="Mary", no.children=3, child.ages=c(4,7,9))
-
+  # lists are a type of vector, can be created by the vector function
+  # z <- vector(mode="list")
+  Lst <- list(name="Fred", wife="Mary", no.children=3, child.ages=c(4,7,9))
+  # can get items a few ways:
+  # $ and double brackets [[]]
+  print(Lst$name)
+  print(Lst[['name']])
+  print(Lst[[1]])
+  # in a list, the single bracket returns a sublist
+  qwerty<-Lst[1]
+  print(class(qwerty))
+  print(qwerty)
+  print("========")
+  
+  # can add items to a list (like a vector)
+  j <- list(name="Joe", salary=55000, union=T)
+  Lst$qqq<-j
 ## Functions
 q<-function(x, y)
 {
