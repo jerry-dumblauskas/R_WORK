@@ -10,7 +10,7 @@ print(xvect)
 print("length of vector using length()")
 print (length(vect))
 print("vectors recycle")
-print(c(1,2,4) + c(6,0,9,20,22))
+print(c(1,2,4) + c(6,0,9,20,22, 55))
   # Vector Indexing
   # start at 1
   # vector1[vector2]
@@ -38,7 +38,7 @@ print(c(1,2,4) + c(6,0,9,20,22))
   print("Matrices!")
   # A matrix is a vector with two additional attributes: 
   #the number of rows and the number of columns. Since matrices are vectors, 
-  #they also have modes, such as numeric and character. 
+  #they also have modes, such as numeric and character.  one matrix/one mode
   #(On the other hand, vectors are not one-column or one-row matrices.)
   
   #storage of a matrix is in column-major order (can override with byrow)
@@ -74,13 +74,85 @@ print(c(1,2,4) + c(6,0,9,20,22))
   # can add items to a list (like a vector)
   j <- list(name="Joe", salary=55000, union=T)
   Lst$qqq<-j
-## Functions
-q<-function(x, y)
-{
-  z<-y+x
-}
+  # or Lst[[x]]<-j -- but Lst[x] will not work as this R wants
+  # to put each item in the list in a separate master list slot
+  
+  #unlist unpacks a list into a vector -- uses lowest common denom for vector type
+  # NULL < raw < logical < integer < real < complex < character < list < expression
+  # also keeps the names
+  v<-unlist(j)
+  print(v)
+  # can remove names with unname
+  v1<-unname(v)
+  print(v1)
+  
+  # lapply is apply but for lists!!!!!
+  la<-lapply(list(1:3,25:29), mean)
+  print(la)
+  # sapply will simplify to a vector or matrix (depending on output)
+  sa<-sapply(list(1:3,25:29), mean)
+  print (sa)
 
-print(q(44,11))
-## builtin functions
-x<-c(1,2,3,4)
-print (length(x))
+## DataFrames!
+  # A data frame is a list, with the components of that list being equal-length vectors.
+  # you can go more complicated actually, but this is rare in practice
+  
+  # create, stringsasfactors should be false, unless you want char vectors to be factors
+  ages <- c(12,10)
+  kids <- c("Jack","Jill")
+  d <- data.frame(kids,ages,stringsAsFactors=FALSE)
+  d1 <- data.frame(kids,ages)
+  
+  # access, since a list, same way to get ITEMS
+  print(d$kids)
+  print(d[[1]])
+  
+  # sub data frame is
+  print(d[1])
+  
+  # but can get info like a matrix
+  print(d[,1])  #note that d[1,] justs gives back a df -- kinda weird
+  # not really, a column in a df is one type -- but mult rows will by default
+  # made to give back a df
+  
+  # merge merges df's like a join in sql
+  hobbies <- c("bball","karate")
+  d2 <- data.frame(kids,hobbies,stringsAsFactors=FALSE)
+  print(d)
+  print(d2)
+  print(merge(d,d2))
+# Factors
+  # factors are things like sex, gender -- a set of valid values
+  # char vectors are set by default (see above)
+  # can also use the factor function
+  # factors also act as valid values
+  x <- c(5,12,13,12)
+  xf <- factor(x)
+  print(str(xf))
+  print(xf)
+  # tapply(x,f,g) has x as a vector, f as a factor or list of factors, and g as a function.
+  ages <- c(25,26,55,37,21,42)
+  affils <- c("R","D","D","R","U","D")
+  print(tapply(ages,affils,mean))
+  
+  # split is like tapply light
+  #split(x,f)
+  
+  d <- data.frame(list(gender=c("M","M","F","M","F","F"),
+  age=c(47,59,21,32,33,24),income=c(55000,88000,32450,76500,123000,45650)))
+  d$over25 <- ifelse(d$age > 25,1,0)
+  print(split(d$income,list(d$gender,d$over25)))
+  
+  # by()
+  # Calls to by() look very similar to calls to tapply(), 
+  # with the first argument specifying our data, the second the grouping factor, 
+  # and the third the function to be applied to each group.
+  
+# Tables
+  #???
+  fl <- list(c(5,12,13,12,13,5,13),c("a","bc","a","a","bc","a","a"))
+  print(fl)
+  # to get a count of the list (how the items are related), we use table
+  print(table(fl))
+  
+  # aggregate and cut are used with tables
