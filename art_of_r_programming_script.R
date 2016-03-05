@@ -156,3 +156,17 @@ print(c(1,2,4) + c(6,0,9,20,22, 55))
   print(table(fl))
   
   # aggregate and cut are used with tables
+
+# Control Statements
+  # For
+  x <- c(5,12,13)
+  for (n in x) print(n^2)
+  
+  # get lets you read in string for an object in the environemt
+  tt<-get('m')
+  print (tt)
+  
+  # write your own binary functions
+  "%a2b%" <- function(a,b) return(a+2*b)
+  print (3 %a2b% 5)
+  
