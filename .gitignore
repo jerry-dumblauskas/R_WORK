@@ -4,3 +4,4 @@
 .idea/
 *.ps
 *.pdf
+.RData
