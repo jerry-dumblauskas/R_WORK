@@ -9,30 +9,64 @@ output: pdf_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## Executive Summary
+# Executive Summary
+Motor Trend, a magazine about the automobile industry, is looking at a data set of a collection of cars, and they are interested in exploring the relationship between a set of variables and miles per gallon (MPG) (outcome). They are particularly interested in the following two questions:
 
-## Data Preparation
+"Is an automatic or manual transmission better for MPG"
+"Quantify the MPG difference between automatic and manual transmissions"
 
-## Analysis
+Based on the below analysis, manual transmissions have a slightly better mpg (average 7 mpg better).  But the analysis shows other factors can impact mpg and should be looked at.
 
-## Conclusions
-
-## Appendix
-
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
-
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+# Data Preparation
+Since a car can be only automatic or manual, lets make this a factor variable.
 
 ```{r}
+mtcars$am <- factor(mtcars$am,labels=c("Automatic","Manual"))
 summary(mtcars)
 ```
 
-## Including Plots
+# Modeling
+2 basic models were looked at.  1) just the Automatic/Manual and automatic/manual and disp vs mpg (disp is engine displacement and had the highest vif -- see the appendix)
 
-You can also embed plots, for example:
-
-```{r , echo=FALSE}
-plot(pressure)
+```{r}
+mtcars$am <- factor(mtcars$am,labels=c("Automatic","Manual"))
+my_regre<-lm(mpg~am, data=mtcars)
+summary(my_regre)
+my_regre1<-lm(mpg~am+disp, data=mtcars)
+summary(my_regre1)
 ```
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+In the appendix we run a general linear model against all variables and compute the 'vif'.  The high vif numbers tell us there is a high correlation between values, and that other regressions could be attempted.  The highest vif was displacement and that was picked as other potential regessor.
+
+The second model shows there is a relationship between engine size as well, as the p value is less than 5 percent.
+
+```{r}
+anova(my_regre,my_regre1)
+```
+
+# Inference
+For our research we need to verify the simple model is valid.  A t test will do that.  The null hypothesis is "mpg and auto/manual are the same"
+
+```{r}
+t.test(mpg ~ am, data = mtcars)
+```
+
+
+# Conclusions
+In conclusion, a simple regression of Automatic vs Manual transmission will answer the question of "is automatic or manual transmission better for MPG".  But in in looking at a general regression against all variables, there are other predictors that could be used as well and should be investigated further.  We also looked at another model where we added engine displacement, and this showed the larger the engine the worse the gas mileage.
+
+# Appendix
+
+## Residual Plots and VIF
+
+Both the vif and a residual plot were looked at (for the combined model):
+
+```{r}
+library(car)
+mtcars$am <- factor(mtcars$am,labels=c("Automatic","Manual"))
+my_regre<-lm(mpg~., data=mtcars)
+vif(my_regre)
+par(mfrow=c(2,2))
+plot(my_regre)
+```
+
